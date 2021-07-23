@@ -1,0 +1,13 @@
+*.manifest
+*.spec
+dist/
+build/
+driver/
+Image/
+__pycache__/
+*.log
+*.png
+
+
+
+
