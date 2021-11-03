@@ -21,6 +21,7 @@ config.read(CONFIG_PATH,encoding="utf-8")
 
 COMMANDS_PERSONAL = config['comm']['personal'].split(',')
 COMMANDS_FREECOMPANY= config['comm']['freecompany'].split(',')
+COMMAND_TYPE = config['flag']['comm_type']
 GLOBAL_WAIT = float(config['system']['GLOBAL_WAIT'])
 RAND_WAIT = float(config['system']['RAND_WAIT'])
 START_WAIT = int(config['system']['START_WAIT'])
@@ -39,6 +40,7 @@ def try_to_buy(commands):
     return True
 
 
+
 def clicking_job(housing_type="freecompany"):
     if housing_type == "freecompany":
         commands = COMMANDS_FREECOMPANY
@@ -49,12 +51,20 @@ def clicking_job(housing_type="freecompany"):
     time.sleep(START_WAIT)
     count = 1
     loop = True
-    while loop:
+    while loop:     
         print(f"正在嘗試購買, 次數 {count}")
         loop = try_to_buy(commands)
         count += 1
+        imgname = "done.png"
+        box = pyautogui.locateOnScreen(imgname,confidence=0.9)
+        if box is None:
+            loop = False
     end = time.time()
-    print(f"購買時間: {end-start} 秒!")
+    print(f"停止動作，購買時間: {end-start} 秒!")
 
+job_name = ''
+
+if COMMAND_TYPE == '0':
+    job_name = 'personal'
 
 clicking_job()
